@@ -1,0 +1,58 @@
+INPUT FORMAT
+input: a string of 5 numbers
+	g1 g2 g3 g4 p
+	numbers r from 1-4
+	up/down/left/right
+
+Image: http://bit.ly/kmU0Vo
+
+MAP FORMAT
+
+20*11 (we'll use 200*100 approx)
+
+W W W W W W W W W W W W W W W W W W W W
+W E e e e W e e e e e e e e W e e e e W 
+W e W W e W e W W W W W W e W e W W e W
+W e W e e e e e e G e e e e e e e W e W
+W e W e W W e W W . . W W e W W e W e W
+W e e e e e e W G . . . W e e e e e e W
+W e W e W W e W W W W W W e W W e W e W
+W e W e e e e e e e e e e e e e e W e W
+W e W W e W e W W W W W W e W e W W e W			
+W e e e e W e e e . . . . P W e e e E W
+W W W W W W W W W W W W W W W W W W W W      
+
+this is an example of the map format in ascii
+
+W-Wall
+e-pellets
+E-power pellets
+G-ghosts
+P-pacman
+.-eaten pellete
+
+GAME STATE
+
+The game state can be a 2D array i.e a matrix similar to the map matrix.the position of G,P will get updated after each move.
+Along with this there are two flags,one for each player (f1 and f2)
+to indicate whether the ghosts are active or passive. These flags will be updated when the other players pacman eats a power pellet
+
+Filenames
+The game state will be saved in a file named state.txt
+The bots will read the file and save the next move onto file move.txt in current folder. The bots will be different folders.
+The game trace will be saved onto trace.txt
+
+
+GAME TRACE FORMAT
+
+initial position is taken from the map MAP
+For each turn, the co-ordinates of Gs and P is given, followed by the current score of both players and state of the flags
+xg11 yg11 xg12 yg12 xg13 yg13 xg14 yg14 xp1 yp1 xg21 yg21 xg22 yg22 xg23 yg23 xg24 yg24 xp2 yp2 s1 s2 f1 f2
+
+Processing the game trace
+-------------------------
+The previous positions are written with a '.'
+If the new and old coordinates are same do nothing.
+If the new position of pacman coincides with the new/current position of G and if f is set pacman eats ghost.
+If the new position of pacman coincides with the new/current position of G and if f is not set then game ends.
+
