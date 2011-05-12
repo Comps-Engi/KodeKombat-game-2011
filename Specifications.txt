@@ -53,6 +53,7 @@ Processing the game trace
 -------------------------
 The previous positions are written with a '.'
 If the new and old coordinates are same do nothing.
-If the new position of pacman coincides with the new/current position of G and if f is set pacman eats ghost.
-If the new position of pacman coincides with the new/current position of G and if f is not set then game ends.
+If the new position of ghost coincides  with the new/current position of G, then do nothing
+If the new position of pacman coincides with the new/current position of G and if f is set, then pacman eats ghost.
+If the new position of pacman coincides with the new/current position of G and if f is not set, then game ends.
 
