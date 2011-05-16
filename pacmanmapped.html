@@ -1,0 +1,260 @@
+<html>
+<head>
+<script type="application/javascript">
+function draw(posx, posy,s)
+{var canvas=document.getElementById("canvas");
+if(canvas.getContext)
+{var ctx=canvas.getContext("2d");
+var clr="#FFA500";
+ctx.strokeStyle = clr;
+ctx.fillStyle = "#FFA500";
+ctx.beginPath();
+ctx.arc(posx*s+15,posy*s+15,5,0,Math.PI*2,true);
+ctx.closePath();	
+ctx.stroke();
+ctx.fill();
+
+}
+}
+function draw1(posx,posy,s)
+{var canvas=document.getElementById("canvas");
+if(canvas.getContext)
+{var ctx=canvas.getContext("2d");
+ctx.fillStyle ="#FF0000";
+ctx.beginPath();
+
+ctx.moveTo(posx*s+5,posy*s+ 22.5);
+ctx.quadraticCurveTo(posx*s+5, posy*s+2.5, posx*s+15,  posy*s+2.5);
+ctx.quadraticCurveTo(posx*s+25,posy*s+ 2.5,posx*s+ 25,  posy*s+22.5);
+//3 wavy things
+ctx.quadraticCurveTo(posx*s+25,posy*s+27.2,posx*s+22,posy*s+27.5);
+ctx.quadraticCurveTo(posx*s+19,posy*s+27.5,posx*s+19,posy*s+22.5);
+
+ctx.quadraticCurveTo(posx*s+18,posy*s+27.5,posx*s+15,posy*s+ 27.5);
+ctx.quadraticCurveTo(posx*s+12,posy*s+27.5,posx*s+12,posy*s+22.5);
+
+ctx.quadraticCurveTo(posx*s+11,posy*s+27.5,posx*s+8,posy*s+27.5);
+ctx.quadraticCurveTo(posx*s+5,posy*s+27.5,posx*s+5,posy*s+22.5);
+ctx.closePath();
+ctx.fill();
+//eye
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#FFFFFF";
+ctx.beginPath();
+ctx.arc(posx*s+19,posy*s+12.5,3,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#FFFFFF";
+ctx.beginPath();
+ctx.arc(posx*s+11,posy*s+12.5,3,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+//eye balls
+
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#000000";
+ctx.beginPath();
+ctx.arc(posx*s+19,posy*s+12.5,1.5,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#000000";
+ctx.beginPath();
+ctx.arc(posx*s+11,posy*s+12.5,1.5,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+
+}
+}
+function draw0(posx,posy,s)
+{var canvas=document.getElementById("canvas");
+if(canvas.getContext)
+{var ctx=canvas.getContext("2d");
+ctx.fillStyle ="pink";
+ctx.beginPath();
+
+ctx.moveTo(posx*s+5,posy*s+ 22.5);
+ctx.quadraticCurveTo(posx*s+5, posy*s+2.5, posx*s+15,  posy*s+2.5);
+ctx.quadraticCurveTo(posx*s+25,posy*s+ 2.5,posx*s+ 25,  posy*s+22.5);
+//3 wavy things
+ctx.quadraticCurveTo(posx*s+25,posy*s+27.2,posx*s+22,posy*s+27.5);
+ctx.quadraticCurveTo(posx*s+19,posy*s+27.5,posx*s+19,posy*s+22.5);
+
+ctx.quadraticCurveTo(posx*s+18,posy*s+27.5,posx*s+15,posy*s+ 27.5);
+ctx.quadraticCurveTo(posx*s+12,posy*s+27.5,posx*s+12,posy*s+22.5);
+
+ctx.quadraticCurveTo(posx*s+11,posy*s+27.5,posx*s+8,posy*s+27.5);
+ctx.quadraticCurveTo(posx*s+5,posy*s+27.5,posx*s+5,posy*s+22.5);
+ctx.closePath();
+ctx.fill();
+//eye
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#FFFFFF";
+ctx.beginPath();
+ctx.arc(posx*s+19,posy*s+12.5,3,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#FFFFFF";
+ctx.beginPath();
+ctx.arc(posx*s+11,posy*s+12.5,3,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+//eye balls
+
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#000000";
+ctx.beginPath();
+ctx.arc(posx*s+19,posy*s+12.5,1.5,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#000000";
+ctx.beginPath();
+ctx.arc(posx*s+11,posy*s+12.5,1.5,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+
+}
+}
+
+function draw2(posx,posy,s)
+{var canvas=document.getElementById("canvas");
+if(canvas.getContext)
+{var ctx=canvas.getContext("2d");
+ctx.strokeStyle = "#FFFF00";
+ctx.fillStyle = "#FFF000";
+ctx.beginPath();
+ctx.arc(posx*s+15,posy*s+15,12,0,Math.PI*2,true);
+ctx.stroke();
+ctx.closePath();
+ctx.fill();
+
+ctx.strokeStyle="#FFFFFF"
+ctx.fillStyle="#FFFFFF";
+ctx.beginPath();
+ctx.moveTo(posx*s+15,posy*s+15);
+ctx.lineTo(posx*s+26,posy*s+10);
+ctx.arc(posx*s+15,posy*s+15,12,-Math.PI/8,Math.PI/8,false);
+
+ctx.lineTo(posx*s+15,posy*s+15);
+ctx.stroke();
+ctx.closePath();
+ctx.fill();
+
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#000000";
+ctx.beginPath();
+ctx.arc(posx*s+14,posy*s+8,1,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+}
+}
+function draw5(posx,posy,s)
+{var canvas=document.getElementById("canvas");
+if(canvas.getContext)
+{var ctx=canvas.getContext("2d");
+ctx.strokeStyle = "#FFFF00";
+ctx.fillStyle = "cyan";
+ctx.beginPath();
+ctx.arc(posx*s+15,posy*s+15,12,0,Math.PI*2,true);
+ctx.stroke();
+ctx.closePath();
+ctx.fill();
+
+ctx.strokeStyle="#FFFFFF"
+ctx.fillStyle="#FFFFFF";
+ctx.beginPath();
+ctx.moveTo(posx*s+15,posy*s+15);
+ctx.lineTo(posx*s+26,posy*s+10);
+ctx.arc(posx*s+15,posy*s+15,12,-Math.PI/8,Math.PI/8,false);
+
+ctx.lineTo(posx*s+15,posy*s+15);
+ctx.stroke();
+ctx.closePath();
+ctx.fill();
+
+ctx.strokeStyle = "#EEE";
+ctx.fillStyle = "#000000";
+ctx.beginPath();
+ctx.arc(posx*s+14,posy*s+8,1,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+}
+}
+
+function draw3(posx,posy,s)
+{var canvas=document.getElementById("canvas");
+if(canvas.getContext)
+{var ctx=canvas.getContext("2d");
+
+ctx.strokeStyle = "#808080";
+ctx.fillStyle = "#DCDCDC";
+ctx.beginPath();
+ctx.arc(posx*s+15,posy*s+15,8,0,Math.PI*2,true);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+
+}
+}
+function draw4(posx,posy,s)
+{var canvas=document.getElementById("canvas");
+if(canvas.getContext)
+{var ctx=canvas.getContext("2d");
+ctx.strokeStyle="000000";
+ctx.fillStyle ="#000000";
+ctx.beginPath();
+ctx.moveTo(posx*s+0,posy*s+0);
+ctx.lineTo(posx*s+30,posy*s+0);
+ctx.lineTo(posx*s+30,posy*s+30);
+ctx.lineTo(posx*s+0,posy*s+30);
+ctx.lineTo(posx*s+0,posy*s+0);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+ctx.strokeStyle="000000";
+ctx.fillStyle ="#B22222";
+ctx.beginPath();
+ctx.moveTo(posx*s+2,posy*s+2);
+ctx.lineTo(posx*s+28,posy*s+2);
+ctx.lineTo(posx*s+28,posy*s+28);
+ctx.lineTo(posx*s+2,posy*s+28);
+ctx.lineTo(posx*s+2,posy*s+2);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+
+}
+}
+</script>
+</head>
+<body onload="draw4(0,0,30);draw4(1,0,30);draw4(2,0,30);draw4(3,0,30);draw4(4,0,30);draw4(5,0,30);draw4(6,0,30);draw4(7,0,30);draw4(8,0,30);draw4(9,0,30);draw4(10,0,30);draw4(11,0,30);draw4(12,0,30);draw4(13,0,30);draw4(14,0,30);draw4(15,0,30);draw4(16,0,30);draw4(17,0,30);draw4(18,0,30);draw4(19,0,30);draw4(20,0,30);;draw4(21,0,30);draw4(22,0,30);draw4(23,0,30);draw4(24,0,30);draw4(25,0,30);draw4(26,0,30);draw4(27,0,30);draw4(28,0,30);draw4(29,0,30);draw4(30,0,30);draw4(31,0,30);draw4(32,0,30);draw4(33,0,30);draw4(34,0,30);draw4(35,0,30);draw4(36,0,30);draw4(37,0,30);
+draw4(0,1,30);draw3(1,1,30);draw(2,1,30);draw(3,1,30);draw(4,1,30);draw4(5,1,30);draw(6,1,30);draw(7,1,30);draw(8,1,30);draw(9,1,30);draw(10,1,30);draw(11,1,30);draw(12,1,30);draw(13,1,30);draw4(14,1,30);draw(15,1,30);draw(16,1,30);draw(17,1,30);draw(18,1,30);draw(19,1,30);draw(20,1,30);draw(21,1,30);draw(22,1,30);draw4(23,1,30);draw(24,1,30);draw(25,1,30);draw(26,1,30);draw(27,1,30);draw(28,1,30);draw(29,1,30);draw(30,1,30);draw(31,1,30);draw4(32,1,30);;draw(33,1,30);draw(34,1,30);draw(35,1,30);draw3(36,1,30);draw4(37,1,30);
+ draw4(0,2,30);draw(1,2,30);draw4(2,2,30);draw4(3,2,30);draw(4,2,30);draw4(5,2,30);draw(6,2,30);draw4(7,2,30);draw4(8,2,30);draw4(9,2,30);draw4(10,2,30);draw4(11,2,30);draw4(12,2,30);draw(13,2,30);draw4(14,2,30);draw(15,2,30);draw4(16,2,30);draw4(17,2,30);draw(18,2,30);draw(19,2,30);draw4(20,2,30);draw4(21,2,30);draw(22,2,30);draw4(23,2,30);draw(24,2,30);draw4(25,2,30);draw4(26,2,30);draw4(27,2,30);draw4(28,2,30);draw4(29,2,30);draw4(30,2,30);draw(31,2,30);draw4(32,2,30);draw(33,2,30);draw4(34,2,30);draw4(35,2,30);draw(36,2,30);draw4(37,2,30);
+draw4(0,3,30);draw(1,3,30);draw(2,3,30);draw4(3,3,30);draw(4,3,30);draw(5,3,30);draw(6,3,30);draw(7,3,30);draw(8,3,30);draw(9,3,30);draw(10,3,30);draw(11,3,30);draw(12,3,30);draw(13,3,30);draw(14,3,30);draw(15,3,30);draw(16,3,30);draw4(17,3,30);draw(18,3,30);draw(19,3,30);draw4(20,3,30);draw(21,3,30);draw(22,3,30);draw(23,3,30);draw(24,3,30);draw(25,3,30);draw(26,3,30);draw(27,3,30);draw(28,3,30);draw(29,3,30);draw(30,3,30);draw(31,3,30);draw(32,3,30);draw(33,3,30);draw(34,3,30);draw4(35,3,30);draw(36,3,30);draw4(37,3,30);
+draw4(0,4,30);draw(1,4,30);draw4(2,4,30);
+draw(3,4,30);draw4(4,4,30);draw4(5,4,30);draw(6,4,30);draw4(7,4,30);draw4(8,4,30);draw(9,4,30);draw(10,4,30);draw4(11,4,30);draw4(12,4,30);draw(13,4,30);draw4(14,4,30);draw4(15,4,30);draw(16,4,30);draw4(17,4,30);draw(18,4,30);draw(19,4,30);draw4(20,4,30);draw(21,4,30);draw4(22,4,30);draw4(23,4,30);draw(24,4,30);draw4(25,4,30);draw4(26,4,30);draw(27,4,30);draw(28,4,30);draw4(29,4,30);draw4(30,4,30);draw(31,4,30);draw4(32,4,30);draw4(33,4,30);draw(34,4,30);draw4(35,4,30);draw(36,4,30);draw4(37,4,30);
+draw4(0,5,30);draw(1,5,30);draw(2,5,30);draw(3,5,30);draw(4,5,30);draw(5,5,30);draw(6,5,30);draw4(7,5,30);draw1(8,5,30);draw1(9,5,30);draw1(10,5,30);draw1(11,5,30);draw4(12,5,30);draw(13,5,30);draw(14,5,30);draw(15,5,30);draw(16,5,30);draw(17,5,30);draw(18,5,30);draw(19,5,30);draw(20,5,30);draw(21,5,30);draw(22,5,30);draw4(23,5,30);draw0(24,5,30);draw0(25,5,30);draw0(26,5,30);draw0(27,5,30);draw4(28,5,30);draw(29,5,30);draw(30,5,30);draw(31,5,30);draw(32,5,30);draw(33,5,30);draw(34,5,30);draw(35,5,30);draw(36,5,30);draw4(37,5,30);
+draw4(0,6,30);draw(1,6,30);draw4(2,6,30);draw(3,6,30);draw4(4,6,30);draw4(5,6,30);draw(6,6,30);draw4(7,6,30);draw4(8,6,30);draw4(9,6,30);draw4(10,6,30);draw4(11,6,30);draw4(12,6,30);draw(13,6,30);draw4(14,6,30);draw4(15,6,30);draw(16,6,30);draw4(17,6,30);draw(18,6,30);draw4(19,6,30);draw4(20,6,30);draw(21,6,30);draw4(22,6,30);draw4(23,6,30);draw(24,6,30);draw4(25,6,30);draw4(26,6,30);draw4(27,6,30);draw4(28,6,30);draw4(29,6,30);draw4(30,6,30);draw(31,6,30);draw4(32,6,30);draw4(33,6,30);draw(34,6,30);draw4(35,6,30);draw(36,6,30);draw4(37,6,30);
+draw4(0,7,30);draw(1,7,30);draw4(2,7,30);draw(3,7,30);draw(4,7,30);draw(5,7,30);draw(6,7,30);draw(7,7,30);draw(8,7,30);draw(9,7,30);draw(10,7,30);draw(11,7,30);draw(12,7,30);draw(13,7,30);draw(14,7,30);draw(15,7,30);draw(16,7,30);draw4(17,7,30);draw(18,7,30);draw(19,7,30);draw4(20,7,30);draw(21,7,30);draw(22,7,30);draw(23,7,30);draw(24,7,30);draw(25,7,30);draw(26,7,30);draw(27,7,30);draw(28,7,30);draw(29,7,30);draw(30,7,30);draw(31,7,30);draw(32,7,30);draw(33,7,30);draw(34,7,30);draw4(35,7,30);draw(36,7,30);draw4(37,7,30);
+draw4(0,8,30);draw(1,8,30);draw4(2,8,30);draw4(3,8,30);draw(4,8,30);draw4(5,8,30);draw(6,8,30);draw4(7,8,30);draw4(8,8,30);draw4(9,8,30);draw4(10,8,30);draw4(11,8,30);draw4(12,8,30);draw(13,8,30);draw4(14,8,30);draw(15,8,30);draw4(16,8,30);draw4(17,8,30);draw(18,8,30);draw(19,8,30);draw4(20,8,30);draw4(21,8,30);draw(22,8,30);draw4(23,8,30);draw(24,8,30);draw4(25,8,30);draw4(26,8,30);draw4(27,8,30);draw4(28,8,30);draw4(29,8,30);draw4(30,8,30);draw(31,8,30);draw4(32,8,30);draw(33,8,30);draw4(34,8,30);draw4(35,8,30);draw(36,8,30);draw4(37,8,30);
+draw4(0,9,30);draw(1,9,30);draw(2,9,30);draw(3,9,30);draw(4,9,30);draw(5,9,30);draw4(6,9,30);draw(7,9,30);draw(8,9,30);draw(9,9,30);draw(10,9,30);draw(11,9,30);draw(12,9,30);draw(13,9,30);draw5(14,9,30);draw4(15,9,30);draw(16,9,30);draw(17,9,30);draw(18,9,30);draw3(19,9,30);draw3(20,9,30);draw(21,9,30);draw(22,9,30);draw(23,9,30);draw4(24,9,30);draw2(25,9,30);draw(26,9,30);draw(27,9,30);draw(28,9,30);draw(29,9,30);draw(30,9,30);draw(31,9,30);draw4(32,9,30);draw(33,9,30);draw(34,9,30);draw(35,9,30);draw(36,9,30);draw4(37,9,30);
+draw4(0,10,30);draw(1,10,30);draw(2,10,30);draw4(3,10,30);draw4(4,10,30);draw4(5,10,30);draw4(6,10,30);draw4(7,10,30);draw(8,10,30);draw(9,10,30);draw(10,10,30);draw(11,10,30);draw4(12,10,30);draw4(13,10,30);draw4(14,10,30);draw4(15,10,30);draw4(16,10,30);draw(17,10,30);draw(18,10,30);draw(19,10,30);draw(20,10,30);draw4(21,10,30);draw4(22,10,30);draw4(23,10,30);draw4(24,10,30);draw4(25,10,30);draw(26,10,30);draw(27,10,30);draw(28,10,30);draw(29,10,30);draw4(30,10,30);draw4(31,10,30);draw4(32,10,30);draw4(33,10,30);draw4(34,10,30);draw(35,10,30);draw(36,10,30);draw4(37,10,30);
+draw4(0,11,30);draw4(0,11,30);draw4(0,11,30);draw4(0,11,30);draw4(1,11,30);draw4(2,11,30);draw4(3,11,30);draw4(4,11,30);draw4(5,11,30);draw4(6,11,30);draw4(7,11,30);draw4(8,11,30);draw4(9,11,30);draw4(10,11,30);draw4(11,11,30);draw4(12,11,30);draw4(13,11,30);draw4(14,11,30);draw4(15,11,30);draw4(16,11,30);draw4(17,11,30);draw4(18,11,30);draw4(19,11,30);draw4(20,11,30);draw4(21,11,30);draw4(22,11,30);draw4(23,11,30);draw4(24,11,30);draw4(25,11,30);draw4(26,11,30);draw4(27,11,30);draw4(28,11,30);draw4(29,11,30);draw4(30,11,30);draw4(31,11,30);draw4(32,11,30);draw4(33,11,30);draw4(34,11,30);draw4(35,11,30);draw4(36,11,30);draw4(37,11,30);	">
+<canvas id="canvas" width="1200" height="900"></canvas>
+</body>
+</html>
+
+
