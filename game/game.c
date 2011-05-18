@@ -5,9 +5,12 @@
 
 int map_row,map_col;
 char bot1[20],bot2[20];
-
+int score1,score2,f1,f2;
+char g1[4]={'e','e','e','e'};
+char g2[4]={'e','e','e','e'};
 char map_state1[100][100];
 char map_state2[100][100];
+
 void get_current_positions(int ghost_p1[4][2], int *pacman1_x,int *pacman1_y,int ghost_p2[4][2], int *pacman2_x,int *pacman2_y);
 void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4][2],int pacman2_x,int pacman2_y);
 void new_pos(int dir, int old_row, int old_col, int *new_row, int *new_col);
@@ -46,11 +49,31 @@ int main(int argc, char *argv[])
 	printf("before update");
 	write_state_file();
 	get_current_positions(ghost_p1, &pacman1_x,&pacman1_y,ghost_p2, &pacman2_x,&pacman2_y);
+
+	printf("\nthe current positions of ghost and pacman player 1 ");
+	for(i=0;i<4;i++)
+	{
+		printf("\n %d %d",ghost_p1[i][0],ghost_p1[i][1]);
+	}	
+	printf("\n %d %d",pacman1_x,pacman1_y);
+
+	printf("\nthe current positions of ghost and pacman player 2 ");
+	for(i=0;i<4;i++)
+	{
+		printf("\n %d %d",ghost_p2[i][0],ghost_p2[i][1]);
+	}	
+	printf("\n %d %d",pacman2_x,pacman2_y);
+	
+	write_trace(ghost_p1,pacman1_x,pacman1_y,ghost_p2,pacman2_x,pacman2_y,0,0);
 	//compile bots
 	//execute 10*w*h times
+	printf("\nstate1 before change_state \n");
 	
 	change_state(ghost_p1,pacman1_x,pacman1_y,ghost_p2, pacman2_x,pacman2_y);//to chavoid write_state_file()nge the state according to move.txt in bot folders
 	
+	write_state_file();
+	get_current_positions(ghost_p1, &pacman1_x,&pacman1_y,ghost_p2, &pacman2_x,&pacman2_y);
+	write_trace(ghost_p1,pacman1_x,pacman1_y,ghost_p2,pacman2_x,pacman2_y,score1,score2);
 
 
 }
@@ -67,7 +90,16 @@ void write_state_file()
 	strcat(path1,"/state.txt");
 	strcpy(path2,bot2);
 	strcat(path2,"/state.txt");
-
+	printf("\nstate1\n");
+	for(i=0;i<map_row;i++)
+	{
+		for(j=0;j<map_col;j++) 
+		{
+			printf("%c ", map_state1[i][j]);			
+		}
+		printf("\n");
+	}
+	
 	fp2=fopen(path1,"w+");
 	fp3=fopen(path2,"w+");
 
@@ -119,7 +151,7 @@ void write_trace(int ghost_p1[4][2], int pacman1_x,int pacman1_y,int ghost_p2[4]
 	}
 	fprintf(fp,"%d %d ", pacman2_x,pacman2_y);
 	fprintf(fp,"%d %d ", score1,score2);
-	fprintf(fp,"%d %d ", 0,0);
+	fprintf(fp,"%d %d\n", f1,f2);
 
 }
 
@@ -199,7 +231,7 @@ void get_current_positions(int ghost_p1[4][2], int *pacman1_x,int *pacman1_y,int
 		}
 	}
    			
-write_trace(ghost_p1,*pacman1_x,*pacman1_y,ghost_p2,*pacman2_x,*pacman2_y,0,0);
+
 }
 
 void new_pos(int dir, int old_row, int old_col, int *new_row, int *new_col)
@@ -237,9 +269,11 @@ void new_pos(int dir, int old_row, int old_col, int *new_row, int *new_col)
 void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4][2],int pacman2_x,int pacman2_y)
 {
 	char path1[30],path2[30];
-	int new_ghost_p1[4][2],new_pacman1_x,new_pacman1_y,new_ghost_p2[4][2],new_pacman2_x,new_pacman2_y,i;
+	int new_ghost_p1[4][2],new_pacman1_x,new_pacman1_y,new_ghost_p2[4][2],new_pacman2_x,new_pacman2_y,i,j;
 	FILE *fp;
 	int dir;
+	
+
 	strcpy(path1,bot1);
 	strcat(path1,"/move.txt");
 	strcpy(path2,bot2);
@@ -249,24 +283,122 @@ void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4]
 	fp=fopen(path1,"r+");
 	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p1[0][0],ghost_p1[0][1], &new_ghost_p1[0][0],&new_ghost_p1[0][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p1[1][0],ghost_p1[1][1], &new_ghost_p1[1][0],&new_ghost_p1[1][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p1[2][0],ghost_p1[2][1], &new_ghost_p1[2][0],&new_ghost_p1[2][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p1[3][0],ghost_p1[3][1], &new_ghost_p1[3][0],&new_ghost_p1[3][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,pacman1_x,pacman1_y, &new_pacman1_x,&new_pacman1_y);		
+
 	fclose(fp);
 	//bot2
 	fp=fopen(path2,"r+");
 	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p2[0][0],ghost_p2[0][1], &new_ghost_p2[0][0],&new_ghost_p2[0][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p2[1][0],ghost_p2[1][1], &new_ghost_p2[1][0],&new_ghost_p2[1][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p2[2][0],ghost_p2[2][1], &new_ghost_p2[2][0],&new_ghost_p2[2][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,ghost_p2[3][0],ghost_p2[3][1], &new_ghost_p2[3][0],&new_ghost_p2[3][1]);
+	fscanf(fp,"%d ",&dir);
 	new_pos(dir,pacman2_x,pacman2_y, &new_pacman2_x,&new_pacman2_y);		
 	fclose(fp);
-		
-	//change score, map_state1,map_state2	
 	
+
+
+	//change score, map_state1,map_state2	
+	map_state1[pacman1_x][pacman1_y]='.';
+	map_state2[pacman1_x][pacman1_y]='.';	
+	map_state1[pacman2_x][pacman2_y]='.';
+	map_state2[pacman2_x][pacman2_y]='.';	
+	
+	printf("\nstate1 after old pacman changes in change_state\n");
+	for(i=0;i<map_row;i++)
+	{
+		for(j=0;j<map_col;j++) 
+		{
+			printf("%c ", map_state1[i][j]);			
+		}
+		printf("\n");
+	}	
+	
+	for(i=0;i<4;i++)
+	{
+		map_state1[ghost_p1[i][0]][ghost_p1[i][1]]='e';
+		map_state2[ghost_p1[i][0]][ghost_p1[i][1]]='e';
+
+		map_state2[ghost_p2[i][0]][ghost_p2[i][1]]='e';
+		map_state1[ghost_p2[i][0]][ghost_p2[i][1]]='e';
+	}
+
+	printf("\nstate1 aftr changes to ghosts in change_state\n");
+	for(i=0;i<map_row;i++)
+	{
+		for(j=0;j<map_col;j++) 
+		{
+			printf("%c ", map_state1[i][j]);			
+		}
+		printf("\n");
+	}
+	
+	if(map_state1[new_pacman1_x][new_pacman1_y]=='e') score1++;
+	else if(map_state1[new_pacman1_x][new_pacman1_y]=='E') {score1=+10; f1=1;}
+
+
+	if(map_state2[new_pacman2_x][new_pacman2_y]=='e') score2++;
+	else if(map_state2[new_pacman2_x][new_pacman2_y]=='E') {score2=+10; f2=1;}
+	
+	for(i=0;i<4;i++)
+	{
+		if(((new_pacman1_x==ghost_p1[i][0])&&(new_pacman1_y==ghost_p1[i][1]))||((new_pacman1_x==new_ghost_p1[i][0])&&(new_pacman1_y==new_ghost_p1[i][1])))
+		{
+			if(f1==0)
+			{
+				//ghost eats pacman
+			}
+			else if (f1==1)
+			{
+				//pacman eats ghost
+			}
+		}
+
+		if(((new_pacman2_x==ghost_p2[i][0])&&(new_pacman2_y==ghost_p2[i][1]))||((new_pacman2_x==new_ghost_p2[i][0])&&(new_pacman2_y==new_ghost_p2[i][1])))
+		{
+			if(f2==0)
+			{
+				//ghost eats pacman
+			}
+			else if (f2==1)
+			{
+				//pacman eats ghost
+			}
+		}
+	}
+	
+
+	
+	//if pacmans don't coincide
+	map_state1[new_pacman1_x][new_pacman1_y]='P';
+	map_state2[new_pacman1_x][new_pacman1_y]='p';	
+	map_state2[new_pacman2_x][new_pacman2_y]='P';
+	map_state1[new_pacman2_x][new_pacman2_y]='p';	
 		
+	
+	//if ghosts do not coincide// keep track of old values at positions where ghost is present
+	for(i=0;i<4;i++)
+	{
+		g1[i]=map_state1[new_ghost_p1[i][0]][new_ghost_p1[i][1]];
+		g2[i]=map_state2[new_ghost_p1[i][0]][new_ghost_p1[i][1]];
+		map_state1[new_ghost_p1[i][0]][new_ghost_p1[i][1]]='G';
+		map_state2[new_ghost_p1[i][0]][new_ghost_p1[i][1]]='g';
+
+		map_state2[new_ghost_p2[i][0]][new_ghost_p2[i][1]]='G';
+		map_state1[new_ghost_p2[i][0]][new_ghost_p2[i][1]]='g';
+	}
+	
 	
 	
 }
