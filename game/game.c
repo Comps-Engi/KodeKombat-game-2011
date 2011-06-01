@@ -10,6 +10,8 @@ char g1[4]={'e','e','e','e'};
 char g2[4]={'e','e','e','e'};
 char map_state1[100][100];
 char map_state2[100][100];
+int init_ghost_p1[4][2],init_ghost_p2[4][2];
+int ghost_p1_alive[4];ghost_p2_alive[4];
 
 void get_current_positions(int ghost_p1[4][2], int *pacman1_x,int *pacman1_y,int ghost_p2[4][2], int *pacman2_x,int *pacman2_y);
 void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4][2],int pacman2_x,int pacman2_y);
@@ -17,6 +19,7 @@ void new_pos(int dir, int old_row, int old_col, int *new_row, int *new_col);
 void write_state_file();
 void write_trace(int ghost_p1[4][2], int pacman1_x,int pacman1_y,int ghost_p2[4][2],int pacman2_x,int pacman2_y,int score1,int score2);
 void read_state(char map[20]);
+void compile_bot();
 
 int main(int argc, char *argv[])
 {
@@ -33,39 +36,88 @@ int main(int argc, char *argv[])
 	}
 	strcpy(map,argv[1]);
 
-	read_state(map);
-
 	strcpy(bot1,argv[2]);
 	strcpy(bot2,argv[3]);
+
 	printf("\n%s Vs %s\n",bot1,bot2);
 
+	read_state(map);
 	
 
+	//map_state1
+/*	printf("\nmapstate1\n");
+	for (i=0;i<map_row;i++)
+	{
+		for(j=0;j<map_col;j++)
+		{
+			printf("%c ",map_state1[i][j]);
+		}
+		printf("\n");
+	}*/
+	/*create directories for each bot*/
 	mkdir(bot1,0777);
 	mkdir(bot2,0777);
 
 	
-	printf("before update");
 	write_state_file();
 	get_current_positions(ghost_p1, &pacman1_x,&pacman1_y,ghost_p2, &pacman2_x,&pacman2_y);
+	
+	/*store initial ghost positions*/
+	for(i=0;i<4;i++)
+	{
+		init_ghost_p1[i][0]=ghost_p1[i][0];
+		init_ghost_p2[i][0]=ghost_p2[i][0];
+	}
+
+
 	write_trace(ghost_p1,pacman1_x,pacman1_y,ghost_p2,pacman2_x,pacman2_y,0,0);
 
-	//compile_bot();
+	compile_bot();			//compile bots
+	
 	//execute 10*w*h times
-	printf("\nstate1 before change_state \n");
-	
-	change_state(ghost_p1,pacman1_x,pacman1_y,ghost_p2, pacman2_x,pacman2_y);//to chavoid write_state_file()nge the state according to move.txt in bot folders
-	
-	write_state_file();
-	get_current_positions(ghost_p1, &pacman1_x,&pacman1_y,ghost_p2, &pacman2_x,&pacman2_y);
-	write_trace(ghost_p1,pacman1_x,pacman1_y,ghost_p2,pacman2_x,pacman2_y,score1,score2);
-
+	for(i=0;i<10*map_col*3;i++)
+	{
+		//printf("%d   ",i);
+		system("./aa_bot");
+		system("./bb_bot");
+		
+		change_state(ghost_p1,pacman1_x,pacman1_y,ghost_p2, pacman2_x,pacman2_y);//to change the state according to move.txt in bot folders
+		write_state_file();
+		get_current_positions(ghost_p1, &pacman1_x,&pacman1_y,ghost_p2, &pacman2_x,&pacman2_y);
+		write_trace(ghost_p1,pacman1_x,pacman1_y,ghost_p2,pacman2_x,pacman2_y,score1,score2);
+	}
 
 }
 
+void compile_bot()
+{
+	char path1[30],path2[3];
+
+	strcpy(path1,"");
+	strcpy(path1,bot1);	
+	strcat(path1,".c");	
+
+	strcpy(path2,"");
+	strcpy(path2,bot1);	
+	strcat(path2,"_bot");
+
+
+	strcpy(path1,"");
+	strcpy(path1,bot2);	
+	strcat(path1,".c");	
+
+	strcpy(path2,"");
+	strcpy(path2,bot2);	
+	strcat(path2,"_bot");
+
+	system("gcc aa.c -o aa_bot -lm");
+	system("gcc bb.c -o bb_bot -lm");
+}
+
+
+/*write states of each bot in state.txt inside corresponding folder*/
 void write_state_file()
 {
-	printf("inside update");
 	int i,j;
 
 	FILE *fp1, *fp2,*fp3;
@@ -75,15 +127,6 @@ void write_state_file()
 	strcat(path1,"/state.txt");
 	strcpy(path2,bot2);
 	strcat(path2,"/state.txt");
-	printf("\nstate1\n");
-	for(i=0;i<map_row;i++)
-	{
-		for(j=0;j<map_col;j++) 
-		{
-			printf("%c ", map_state1[i][j]);			
-		}
-		printf("\n");
-	}
 	
 	fp2=fopen(path1,"w+");
 	fp3=fopen(path2,"w+");
@@ -117,11 +160,12 @@ void write_state_file()
 	
 }
 
+
+/*write positions, score and flag into trace.txt*/
 void write_trace(int ghost_p1[4][2], int pacman1_x,int pacman1_y,int ghost_p2[4][2],int pacman2_x,int pacman2_y,int score1,int score2)
 {
 		
 
-	printf("inside write");
 	FILE *fp;
 	int i;
 	fp=fopen("trace.txt","a");
@@ -140,6 +184,15 @@ void write_trace(int ghost_p1[4][2], int pacman1_x,int pacman1_y,int ghost_p2[4]
 
 }
 
+
+
+
+/*to read the initial state from map
+
+mapstate1 and mapstate2 are arrays for state of bot1 and bot2
+
+map_col,map_row- number of columns and rows in the map
+*/
 void read_state(char map[20])
 {
 	int i,j;	
@@ -170,16 +223,10 @@ void read_state(char map[20])
 	}
 	fclose(fp);
 	map_row=i;
-	for(i=0;i<map_row;i++)
-	{
-		for(j=0;j<map_col;j++)
-			printf("%c ",map_state1[i][j]);
-		printf("\n");
-	}
 }
 
 
-
+/*get current positions of all ghosts and pacman*/
 
 void get_current_positions(int ghost_p1[4][2], int *pacman1_x,int *pacman1_y,int ghost_p2[4][2], int *pacman2_x,int *pacman2_y)
 {
@@ -251,6 +298,9 @@ void new_pos(int dir, int old_row, int old_col, int *new_row, int *new_col)
 	}
 }
 
+
+/*to read moves from move.txt in corresponding bot folders and change the states of bots*/
+
 void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4][2],int pacman2_x,int pacman2_y)
 {
 	char path1[30],path2[30];
@@ -263,7 +313,7 @@ void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4]
 	strcat(path1,"/move.txt");
 	strcpy(path2,bot2);
 	strcat(path2,"/move.txt");
-	printf("%s",path1);
+
 		//for bot1
 	fp=fopen(path1,"r+");
 	fscanf(fp,"%d ",&dir);
@@ -278,6 +328,7 @@ void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4]
 	new_pos(dir,pacman1_x,pacman1_y, &new_pacman1_x,&new_pacman1_y);		
 
 	fclose(fp);
+
 	//bot2
 	fp=fopen(path2,"r+");
 	fscanf(fp,"%d ",&dir);
@@ -293,42 +344,24 @@ void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4]
 	fclose(fp);
 	
 
-
-	//change score, map_state1,map_state2	
+	//The previous positions are written with a '.'
 	map_state1[pacman1_x][pacman1_y]='.';
 	map_state2[pacman1_x][pacman1_y]='.';	
 	map_state1[pacman2_x][pacman2_y]='.';
 	map_state2[pacman2_x][pacman2_y]='.';	
 	
-	printf("\nstate1 after old pacman changes in change_state\n");
-	for(i=0;i<map_row;i++)
-	{
-		for(j=0;j<map_col;j++) 
-		{
-			printf("%c ", map_state1[i][j]);			
-		}
-		printf("\n");
-	}	
 	
+	//previous positions of ghosts are stored in g1 and g2 array
 	for(i=0;i<4;i++)
 	{
-		map_state1[ghost_p1[i][0]][ghost_p1[i][1]]='e';
-		map_state2[ghost_p1[i][0]][ghost_p1[i][1]]='e';
+		map_state1[ghost_p1[i][0]][ghost_p1[i][1]]=g1[i];
+		map_state2[ghost_p1[i][0]][ghost_p1[i][1]]=g1[i];
 
-		map_state2[ghost_p2[i][0]][ghost_p2[i][1]]='e';
-		map_state1[ghost_p2[i][0]][ghost_p2[i][1]]='e';
+		map_state2[ghost_p2[i][0]][ghost_p2[i][1]]=g2[i];
+		map_state1[ghost_p2[i][0]][ghost_p2[i][1]]=g2[i];
 	}
 
-	printf("\nstate1 aftr changes to ghosts in change_state\n");
-	for(i=0;i<map_row;i++)
-	{
-		for(j=0;j<map_col;j++) 
-		{
-			printf("%c ", map_state1[i][j]);			
-		}
-		printf("\n");
-	}
-	
+	//to increment score
 	if(map_state1[new_pacman1_x][new_pacman1_y]=='e') score1++;
 	else if(map_state1[new_pacman1_x][new_pacman1_y]=='E') {score1=+10; f1=1;}
 
@@ -336,17 +369,29 @@ void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4]
 	if(map_state2[new_pacman2_x][new_pacman2_y]=='e') score2++;
 	else if(map_state2[new_pacman2_x][new_pacman2_y]=='E') {score2=+10; f2=1;}
 	
+
+	/*If the new position of pacman coincides with the new/current position of G and if f is set, then pacman eats ghost.
+	If the new position of pacman coincides with the new/current position of G and if f is not set, then game ends.*/
 	for(i=0;i<4;i++)
 	{
 		if(((new_pacman1_x==ghost_p1[i][0])&&(new_pacman1_y==ghost_p1[i][1]))||((new_pacman1_x==new_ghost_p1[i][0])&&(new_pacman1_y==new_ghost_p1[i][1])))
 		{
 			if(f1==0)
 			{
-				//ghost eats pacman
+				write_trace(new_ghost_p1,new_pacman1_x,new_pacman1_y,new_ghost_p2,new_pacman2_x,new_pacman2_y,score1,score2);
+				exit(1);
 			}
 			else if (f1==1)
 			{
-				//pacman eats ghost
+				if(map_state1[init_ghost_p1[2][0]][init_ghost_p1[2][1]]=='.')
+					{new_ghost_p1[i][0]=init_ghost_p1[2][0];new_ghost_p1[i][1]=init_ghost_p1[2][1];}
+				else if(map_state1[init_ghost_p1[3][0]][init_ghost_p1[3][1]]=='.')
+					{new_ghost_p1[i][0]=init_ghost_p1[3][0];new_ghost_p1[i][1]=init_ghost_p1[3][1];}				
+				else if(map_state1[init_ghost_p1[1][0]][init_ghost_p1[1][1]]=='.')
+					{new_ghost_p1[i][0]=init_ghost_p1[1][0];new_ghost_p1[i][1]=init_ghost_p1[1][1];}				
+				else if(map_state1[init_ghost_p1[4][0]][init_ghost_p1[4][1]]=='.')
+					{new_ghost_p1[i][0]=init_ghost_p1[4][0];new_ghost_p1[i][1]=init_ghost_p1[4][1];}
+				f1=0;
 			}
 		}
 
@@ -354,11 +399,21 @@ void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4]
 		{
 			if(f2==0)
 			{
-				//ghost eats pacman
+				write_trace(new_ghost_p1,new_pacman1_x,new_pacman1_y,new_ghost_p2,new_pacman2_x,new_pacman2_y,score1,score2);
+				exit(1);
 			}
 			else if (f2==1)
 			{
 				//pacman eats ghost
+				if(map_state1[init_ghost_p2[2][0]][init_ghost_p2[2][1]]=='.')
+					{new_ghost_p2[i][0]=init_ghost_p2[2][0];new_ghost_p2[i][1]=init_ghost_p2[2][1];}
+				else if(map_state1[init_ghost_p2[3][0]][init_ghost_p2[3][1]]=='.')
+					{new_ghost_p2[i][0]=init_ghost_p2[3][0];new_ghost_p2[i][1]=init_ghost_p2[3][1];}				
+				else if(map_state1[init_ghost_p2[1][0]][init_ghost_p2[1][1]]=='.')
+					{new_ghost_p2[i][0]=init_ghost_p2[1][0];new_ghost_p2[i][1]=init_ghost_p2[1][1];}				
+				else if(map_state1[init_ghost_p2[4][0]][init_ghost_p2[4][1]]=='.')
+					{new_ghost_p2[i][0]=init_ghost_p2[4][0];new_ghost_p2[i][1]=init_ghost_p2[4][1];}
+				f2=0;
 			}
 		}
 	}
@@ -366,17 +421,21 @@ void change_state(int ghost_p1[4][2],int pacman1_x,int pacman1_y,int ghost_p2[4]
 
 	
 	//if pacmans don't coincide
+	//new positions of pacman
 	map_state1[new_pacman1_x][new_pacman1_y]='P';
 	map_state2[new_pacman1_x][new_pacman1_y]='p';	
 	map_state2[new_pacman2_x][new_pacman2_y]='P';
 	map_state1[new_pacman2_x][new_pacman2_y]='p';	
 		
-	
-	//if ghosts do not coincide// keep track of old values at positions where ghost is present
+	//new positions of ghosts
+	//check if ghosts do not coincide and to keep track of old values at positions where ghost is present
 	for(i=0;i<4;i++)
-	{
-		g1[i]=map_state1[new_ghost_p1[i][0]][new_ghost_p1[i][1]];
-		g2[i]=map_state2[new_ghost_p1[i][0]][new_ghost_p1[i][1]];
+	{	
+		if(map_state1[new_ghost_p1[i][0]][new_ghost_p1[i][1]]!='G')
+			g1[i]=map_state1[new_ghost_p1[i][0]][new_ghost_p1[i][1]];
+		if(map_state2[new_ghost_p2[i][0]][new_ghost_p2[i][1]]!='G')			
+			g2[i]=map_state2[new_ghost_p2[i][0]][new_ghost_p2[i][1]];
+				
 		map_state1[new_ghost_p1[i][0]][new_ghost_p1[i][1]]='G';
 		map_state2[new_ghost_p1[i][0]][new_ghost_p1[i][1]]='g';
 
