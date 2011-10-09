@@ -1,0 +1,9 @@
+game.c --> game program.
+
+maps --> has maps
+
+compressed folders --> bots
+
+extract--> shell script to extract the bots.
+
+trace.txt --> log of the game
