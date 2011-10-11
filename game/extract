@@ -1,0 +1,20 @@
+#!/bin/sh
+filename=$1;
+flag=0;
+tarfile=$filename.tar;
+zipfile=$filename.zip;
+targzfile=$filename.tar.gz;
+if [ -s $tarfile ] 
+then
+tar -xf $tarfile
+
+elif [ -s $zipfile ] 
+then
+unzip -u $zipfile
+
+elif [ -s $targzfile ] 
+then
+tar -xvzf $targzfile
+else echo "Give a tar or zip file"
+fi
+
